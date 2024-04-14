@@ -37,7 +37,8 @@ public:
 	UFUNCTION()
 	void PlayerDamaged();
 
-
+	float GetCurrentHealth();
+	float GetMaxHealth();
 
 	UPROPERTY(EditAnywhere, Category = "PlayerSettings")
 	int32 currentHP;
@@ -63,6 +64,11 @@ public:
 	//무기 콜리전 오버랩시 데미지 
 	UFUNCTION()
 	void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	class UPlayerHealthWidget* playerUI;
+
+	UPROPERTY(EditAnywhere, Category = "PlayerSettings")
+	TSubclassOf<class UPlayerHealthWidget> playerHealthWidget_bp;
 
 
 protected:

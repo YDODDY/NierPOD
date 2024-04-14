@@ -15,6 +15,7 @@
 #include "BossCharacter.h"
 #include "PlayerPOD.h"
 #include "EngineUtils.h"
+#include "PlayerHealthWidget.h"
 
 
 
@@ -84,9 +85,19 @@ void APlayerCharacter::BeginPlay()
     }
 
     AnimInstance = GetMesh()->GetAnimInstance();
-
-
     weaponComp->OnComponentBeginOverlap.AddDynamic(this, &APlayerCharacter::OnOverlap);
+
+
+    //Ã¼·Â¹Ù UI À§Á¬ 
+    if (playerHealthWidget_bp != nullptr)
+    {
+        playerUI = CreateWidget<UPlayerHealthWidget>(GetWorld(), playerHealthWidget_bp);
+        if (playerUI != nullptr)
+        {
+            playerUI->AddToViewport();
+        }
+    }
+
 }
 
 void APlayerCharacter::Tick(float DeltaTime)
@@ -328,6 +339,16 @@ void APlayerCharacter::PlayerDamaged()
 {
     currentHP = currentHP - 10;
     UE_LOG(LogTemp, Warning, TEXT("Player HP : %d"), currentHP);
+}
+
+float APlayerCharacter::GetCurrentHealth()
+{
+    return float(currentHP);
+}
+
+float APlayerCharacter::GetMaxHealth()
+{
+    return float(maxHP);
 }
 
 
